@@ -7,7 +7,7 @@ from layout import footer
 # can pickup api key from browser or from base code
 st.set_page_config(
     page_title="Consultant Dost",
-    page_icon="![alt-text](https://cdn-icons-png.flaticon.com/128/1189/1189175.png)",
+    page_icon="https://cdn-icons-png.flaticon.com/128/1189/1189175.png",
 )
 st.title("Consultant Dost")
 st.write("""
