@@ -89,16 +89,12 @@ if user_query != "":
     creds = brk+f"Source: [Consultant Dost](https://consultant-dost-chanpie.streamlit.app/)\nMade with ❤️ by [@ChanPie](https://twitter.com/cosmosco_wand)"+brk
 
     with c2:
-        if st.button("Copy Query to Clipboard"):
-                Clipboard.copy("Query:\n"+user_query+"\n\n"+creds)
-                st.success("Query copied successfully!")
+        content="Query:\n"+user_query+"\n\n"+creds
+        st.code(content)
     with c3:
-        if st.button("Copy Response to Clipboard"):
-                Clipboard.copy("Response:\n"+f"{llm_model.choices[0].message.content}\n\n"+creds)
-                st.success("Response copied successfully!")
+        content="Response:\n"+f"{llm_model.choices[0].message.content}\n\n"+creds
+        st.code(content)
     with c1:
-        if st.button("Copy Conversation to Clipboard"):
-                qa = f"Your Query:\n{user_query}\n\n"+f"Consultant Dost's Response:\n{llm_model.choices[0].message.content}+\n\n"+creds
-                Clipboard.copy(qa)
-                st.success("Conversation copied successfully!")
+        content=f"Your Query:\n{user_query}\n\n"+f"Consultant Dost's Response:\n{llm_model.choices[0].message.content}+\n\n"+creds
+        st.code(content)
 footer()
