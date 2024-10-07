@@ -1,2 +1,5 @@
 xsel
 xclip
+wl-clipboard
+qtpy
+PyQt5
