@@ -3,6 +3,7 @@ from groq import Groq
 import os
 import pyperclip
 from layout import footer
+from kivy.core.clipboard import Clipboard
 
 # can pickup api key from browser or from base code
 st.set_page_config(
@@ -81,7 +82,23 @@ if user_query != "":
     )
     st.markdown("""### Your Dost Says: """)
     st.markdown(llm_model.choices[0].message.content) #for stream=False ->default
-    if st.button("Copy to Clipboard"):
-           pyperclip.copy(llm_model.choices[0].message.content)
-           st.success("Text copied successfully!")
+    
+    st.write("#### Copy Options")
+    c1, c2, c3 = st.tabs(["Copy Conversation","Copy Query","Copy Response"])
+    brk = "\n-----------------------------------------------------------------------------------------------------\n"
+    creds = brk+f"Source: [Consultant Dost](https://consultant-dost-chanpie.streamlit.app/)\nMade with ❤️ by [@ChanPie](https://twitter.com/cosmosco_wand)"+brk
+
+    with c2:
+        if st.button("Copy Query to Clipboard"):
+                Clipboard.copy("Query:\n"+user_query+"\n\n"+creds)
+                st.success("Query copied successfully!")
+    with c3:
+        if st.button("Copy Response to Clipboard"):
+                Clipboard.copy("Response:\n"+f"{llm_model.choices[0].message.content}\n\n"+creds)
+                st.success("Response copied successfully!")
+    with c1:
+        if st.button("Copy Conversation to Clipboard"):
+                qa = f"Your Query:\n{user_query}\n\n"+f"Consultant Dost's Response:\n{llm_model.choices[0].message.content}+\n\n"+creds
+                Clipboard.copy(qa)
+                st.success("Conversation copied successfully!")
 footer()
