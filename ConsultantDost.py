@@ -23,7 +23,7 @@ user_query = st.text_input("Ask off here")
 with st.sidebar:
         st.title("Settings")
 
-        api_key = st.text_input("Enter Your API Token here")
+        inp_api_key = st.text_input("Enter Your API Token here")
 
         model = st.selectbox("Select model", ("llama3-70b-8192", "llama3-8b-8192", "mixtral-8x7b-32768", "gemma2-9b-it", "gemma-7b-it", "llama-3.2-11b-text-preview","llama-3.1-70b-versatile"))
 
@@ -44,6 +44,10 @@ with st.sidebar:
 if api_key!="":
         groq_client = Groq(
                 api_key=os.environ.get("GROQ_API_KEY") #API KEY 
+        )
+elif inp_api_key!="":
+        groq_client = Groq(
+                api_key=inp_api_key #API KEY 
         )
 else:
        st.write("Invalid API key! Try again...")
