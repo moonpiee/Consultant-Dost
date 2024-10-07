@@ -1,6 +1,10 @@
 from layout import footer
 import streamlit as st
 
+st.set_page_config(
+    page_title="About Me|Consultant Dost",
+    page_icon="https://cdn-icons-png.flaticon.com/128/1189/1189175.png",
+)
 st.title("About Me")
 
 st.write("## Welcome Here :wave:")
