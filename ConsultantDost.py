@@ -5,24 +5,10 @@ import pyperclip
 from layout import footer
 
 # can pickup api key from browser or from base code
-
-# def string_to_list(x):
-#        splitted
-#        y=[lambda i:i.split(",") for i in x]
-#        return y
-
-# def upd_session_state(st.session_state(), parameter, value):
-#        if parameter not in st.session_state:
-#               st.session_state['parameter'] = value
-#        else:
-#               st.session_state['parameter'] = None
-
 st.set_page_config(
     page_title="Consultant Dost",
     page_icon="![alt-text](https://cdn-icons-png.flaticon.com/128/1189/1189175.png)",
 )
-            
-
 st.title("Consultant Dost")
 st.write("""
 ###### Meet Your Friend Who Can Help You In Your Consultancy Career.
@@ -32,10 +18,6 @@ st.write(f"""## ![alt-text](https://cdn-icons-png.flaticon.com/128/1189/1189175.
 st.write("""### How can I help you today?""")
 st.write("""###### *Navigate to the left sidebar for more settings and info* """)
 user_query = st.text_input("Ask off here")
-
-# tabs = ["Home", "Page 1", "Page 2"]
-# page = st.tabs(tabs)
-
 
 #connect with groq api
 with st.sidebar:
@@ -47,37 +29,22 @@ with st.sidebar:
 
         max_tokens = st.slider("Maximum Tokens",1,35000,2048)
         temp = st.slider("Temperature",0.0,1.0,0.0)
-        # st.write(st.session_state.temp)
-        # if 'previous_slider_value' not in st.session_state:
-        #         st.session_state['previous_slider_value'] = temp
 
-        # if temp != st.session_state['previous_slider_value']:
-        #     # Execute code when the slider value changes
-        #     st.write("Slider value changed to:", temp)
-        #     st.session_state['previous_slider_value'] = temp
-        
-
-        #advanced settings shall i consider topk and top p also in this?
-        
-
-        #exapnd feature
         with st.expander("Advanced Settings"):
-                top_p = st.slider("Top-p",0.0,1.0,0.8) #takes whatever you mention 
+                top_p = st.slider("Top-p",0.0,1.0,0.8) 
                 # top_k = st.slider("Top-k",1,1000,40)
                 freq_penalty = st.slider("Frequency Penalty",0.0,2.0,0.0)
                 pres_penalty = st.slider("Presence Penalty",-2.0,2.0,0.0)
                 stop_list = st.text_input("Stop sequence (words seperated by comma;\n for ex: end,bye):")
                 seed = st.number_input("Seed",0,200000,1)
-                # more_context = st.text_input("Enter your custom context here")
         if stop_list != "":
                splitted_str = stop_list.split(",")
-               stop_list = [x.strip() for x in splitted_str] #look into - lambda func vs list comprehensions
-               print(f"stop list after splitting: {splitted_str}, {type(splitted_str)}") #returns list
-        
-#set the key on os env (windows powershell: $env:GROQ_API_KEY=<key>)
+               stop_list = [x.strip() for x in splitted_str] 
+               print(f"stop list after splitting: {splitted_str}, {type(splitted_str)}") 
+
 try:
         groq_client = Groq(
-                api_key=os.environ.get("GROQ_API_KEY")
+                api_key=os.environ.get("GROQ_API_KEY") #API KEY 
         )
 except ValueError as e:
        st.write("Invalid API key! Try again...")
@@ -98,7 +65,6 @@ print(f"stop sequence words (seperated by comma ex: end,bye): {stop_list}")
 
 
 if user_query != "":
-
     llm_model = groq_client.chat.completions.create(
             messages = [
                     {
@@ -111,7 +77,7 @@ if user_query != "":
                                 to make reponse personal to enhance interaction + {other_qualities}. Maintain neat, clear and precise formatting of text", #system role msg
                     },
                     {
-                            "role"  : "user", #user role | there is assistant role too see docs for that
+                            "role"  : "user", #user role
                             "content" : user_query, #user role msg
                     }
             ],
@@ -119,30 +85,14 @@ if user_query != "":
             max_tokens = max_tokens,
             temperature = temp,
             top_p = top_p,
-        #     top_k = top_k, #not valid as a paramtere here
             frequency_penalty = freq_penalty,
             presence_penalty = pres_penalty,
-            stop = stop_list, #stop sequence,
-            stream = False, #default-False | generates real time data for user - Setting stream=False ensures that you receive the entire response from the service in one complete message, rather than in partial updates. 
-            seed = seed,
-
+            stop = stop_list, #stop sequence
+            stream = False, 
     )
-
     st.markdown("""### Your Dost Says: """)
     st.markdown(llm_model.choices[0].message.content) #for stream=False ->default
     if st.button("Copy to Clipboard"):
            pyperclip.copy(llm_model.choices[0].message.content)
            st.success("Text copied successfully!")
-
-#     for chunk in llm_model: #for stream=True
-#         st.write(chunk.choices[0].delta.content,end='')
-
-
-# st.write("""###### 
-#          Glossary:
-#          max_tokens => maximum number of tokens generated in the response
-#          temperature => controls randomness. more temp => more randomness of output
-#          top_p => sampling pool limit to smallest set of tokens with cumulative probability of atleast p. high top_p => more diverse response.
-
-#          """)
 footer()
