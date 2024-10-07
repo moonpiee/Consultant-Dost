@@ -1,4 +1,3 @@
 xsel
 xclip
 wl-clipboard
-gtk
