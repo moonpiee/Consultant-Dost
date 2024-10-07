@@ -3,7 +3,6 @@ from groq import Groq
 import os
 import pyperclip
 from layout import footer
-from kivy.core.clipboard import Clipboard
 
 # can pickup api key from browser or from base code
 st.set_page_config(
