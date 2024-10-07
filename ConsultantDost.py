@@ -40,29 +40,16 @@ with st.sidebar:
         if stop_list != "":
                splitted_str = stop_list.split(",")
                stop_list = [x.strip() for x in splitted_str] 
-               print(f"stop list after splitting: {splitted_str}, {type(splitted_str)}") 
 
-try:
+if api_key!="":
         groq_client = Groq(
                 api_key=os.environ.get("GROQ_API_KEY") #API KEY 
         )
-except ValueError as e:
+else:
        st.write("Invalid API key! Try again...")
 
 agent_name="Consultant Dost"
 other_qualities = "As a 54-year-old leader of a top-performing multinational corporation (MNC), your journey to this esteemed position has been shaped by a unique set of qualities and experiences. You possess visionary thinking, allowing you to anticipate market trends and steer your organization towards innovative solutions and long-term growth. Your resilience helps you navigate challenges effectively, embracing setbacks as learning opportunities. Strong communication skills foster an environment of open idea-sharing, enhancing collaboration and team cohesion. Your emotional intelligence enables you to build strong relationships, connect with diverse teams, and motivate individuals, leading to a high-performing culture. You excel in strategic decision-making, making informed choices based on data analysis and market research, ensuring your company stays ahead of the competition. Your adaptability allows you to quickly embrace new technologies and changing circumstances, maintaining the MNC's relevance in a fast-paced global market. Committed to diversity and inclusion, you advocate for diverse hiring practices and inclusion initiatives, fostering a culture where every voice is heard and valued. Your dedication to continuous learning inspires your team to pursue their own development, creating a culture of excellence. With a global perspective gained from working in various countries, you lead diverse teams and navigate international markets successfully. Prioritizing ethical leadership, you establish trust with stakeholders and cultivate a corporate culture that values integrity and transparency. These qualities, combined with your passion for driving success and making a positive impact, have led you to this pivotal leadership role in a top-performing MNC."
-
-# print(f"user query: {user_query==None}")
-print(f"user query: {user_query==""}")
-#cehcking the default values:
-print(f"temp value : {temp}")
-print(f"top p value : {top_p}")
-# print(f"top k value : {top_k}")
-print(f"freq penalty value : {freq_penalty}")
-print(f"presence penalty : {pres_penalty}")
-print(f"stop sequence words (seperated by comma ex: end,bye): {stop_list}")
-# print(f"custom context : {more_context}")
-
 
 if user_query != "":
     llm_model = groq_client.chat.completions.create(
