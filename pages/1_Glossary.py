@@ -1,8 +1,11 @@
 import streamlit as st
 from layout import footer
 
+st.set_page_config(
+    page_title="Consultant Dost",
+    page_icon="https://cdn-icons-png.flaticon.com/128/1189/1189175.png",
+)
 st.title("Glossary of Model Settings")
-
 # Model Section
 st.header("Model")
 st.markdown("""
