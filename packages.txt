@@ -1,3 +1,0 @@
-xsel
-xclip
-wl-clipboard
