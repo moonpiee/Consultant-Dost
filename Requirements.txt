@@ -1,0 +1,5 @@
+python
+streamlit
+groq
+pyperclip
+htbuilder

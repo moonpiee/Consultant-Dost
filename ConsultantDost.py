@@ -1,6 +1,10 @@
 import streamlit as st
 from groq import Groq
 import os
+import pyperclip
+from layout import footer
+
+# can pickup api key from browser or from base code
 
 # def string_to_list(x):
 #        splitted
@@ -18,11 +22,10 @@ st.set_page_config(
     page_icon="![alt-text](https://cdn-icons-png.flaticon.com/128/1189/1189175.png)",
 )
             
-        
 
 st.title("Consultant Dost")
 st.write("""
-###### Meet Your Friend who can help you in your Consultancy career.
+###### Meet Your Friend Who Can Help You In Your Consultancy Career.
 """)
 name = st.text_input("Enter Your Name Here")
 st.write(f"""## ![alt-text](https://cdn-icons-png.flaticon.com/128/1189/1189175.png) Welcome {name}:smiley:""")
@@ -37,7 +40,10 @@ user_query = st.text_input("Ask off here")
 #connect with groq api
 with st.sidebar:
         st.title("Settings")
-        model = st.selectbox("Select model", ("mixtral-8x7b-32768", "llama3–70b-8192", "llama3-8b-8192", "gemma-7b-it"))
+
+        api_key = st.text_input("Enter Your API Token here")
+
+        model = st.selectbox("Select model", ("llama3-70b-8192", "llama3-8b-8192", "mixtral-8x7b-32768", "gemma2-9b-it", "gemma-7b-it", "llama-3.2-11b-text-preview","llama-3.1-70b-versatile"))
 
         max_tokens = st.slider("Maximum Tokens",1,35000,2048)
         temp = st.slider("Temperature",0.0,1.0,0.0)
@@ -69,9 +75,12 @@ with st.sidebar:
                print(f"stop list after splitting: {splitted_str}, {type(splitted_str)}") #returns list
         
 #set the key on os env (windows powershell: $env:GROQ_API_KEY=<key>)
-groq_client = Groq(
-        api_key=os.environ.get("GROQ_API_KEY")
-)
+try:
+        groq_client = Groq(
+                api_key=os.environ.get("GROQ_API_KEY")
+        )
+except ValueError as e:
+       st.write("Invalid API key! Try again...")
 
 agent_name="Consultant Dost"
 other_qualities = "As a 54-year-old leader of a top-performing multinational corporation (MNC), your journey to this esteemed position has been shaped by a unique set of qualities and experiences. You possess visionary thinking, allowing you to anticipate market trends and steer your organization towards innovative solutions and long-term growth. Your resilience helps you navigate challenges effectively, embracing setbacks as learning opportunities. Strong communication skills foster an environment of open idea-sharing, enhancing collaboration and team cohesion. Your emotional intelligence enables you to build strong relationships, connect with diverse teams, and motivate individuals, leading to a high-performing culture. You excel in strategic decision-making, making informed choices based on data analysis and market research, ensuring your company stays ahead of the competition. Your adaptability allows you to quickly embrace new technologies and changing circumstances, maintaining the MNC's relevance in a fast-paced global market. Committed to diversity and inclusion, you advocate for diverse hiring practices and inclusion initiatives, fostering a culture where every voice is heard and valued. Your dedication to continuous learning inspires your team to pursue their own development, creating a culture of excellence. With a global perspective gained from working in various countries, you lead diverse teams and navigate international markets successfully. Prioritizing ethical leadership, you establish trust with stakeholders and cultivate a corporate culture that values integrity and transparency. These qualities, combined with your passion for driving success and making a positive impact, have led you to this pivotal leadership role in a top-performing MNC."
@@ -102,7 +111,7 @@ if user_query != "":
                                 to make reponse personal to enhance interaction + {other_qualities}. Maintain neat, clear and precise formatting of text", #system role msg
                     },
                     {
-                            "role"  : "user", #user role
+                            "role"  : "user", #user role | there is assistant role too see docs for that
                             "content" : user_query, #user role msg
                     }
             ],
@@ -119,16 +128,21 @@ if user_query != "":
 
     )
 
-    st.header("Your Dost says: ")
-    st.write(llm_model.choices[0].message.content) #for stream=False
+    st.markdown("""### Your Dost Says: """)
+    st.markdown(llm_model.choices[0].message.content) #for stream=False ->default
+    if st.button("Copy to Clipboard"):
+           pyperclip.copy(llm_model.choices[0].message.content)
+           st.success("Text copied successfully!")
+
 #     for chunk in llm_model: #for stream=True
 #         st.write(chunk.choices[0].delta.content,end='')
 
 
-st.write("""###### 
-         Glossary:
-         max_tokens => maximum number of tokens generated in the response
-         temperature => controls randomness. more temp => more randomness of output
-         top_p => sampling pool limit to smallest set of tokens with cumulative probability of atleast p. high top_p => more diverse response.
+# st.write("""###### 
+#          Glossary:
+#          max_tokens => maximum number of tokens generated in the response
+#          temperature => controls randomness. more temp => more randomness of output
+#          top_p => sampling pool limit to smallest set of tokens with cumulative probability of atleast p. high top_p => more diverse response.
 
-         """)
+#          """)
+footer()
