@@ -1,7 +1,6 @@
 import streamlit as st
 from groq import Groq
 import os
-import pyperclip
 from layout import footer
 
 # can pickup api key from browser or from base code
