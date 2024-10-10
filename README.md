@@ -7,14 +7,14 @@ Meet Your Friend Who Can Help You In Your Consultancy Career With:
 5. Industry Insights & Trends & so on...
 
 ## How To Use
-1. Download the repository & requirements from [requirements file](Requirements.txt)
-2. Get Your Groq API key [here](https://console.groq.com/keys). You can use it directly in the [code](ConsultantDost.py) or enter it in placeholder provided on [app page](ConsultantDost.py)
+1. Download the repository & requirements from [Requirements.txt](https://github.com/moonpiee/Consultant-Dost/blob/main/requirements.txt)
+2. Get Your Groq API key [here](https://console.groq.com/keys). You can use it directly in the [code](https://github.com/moonpiee/Consultant-Dost/blob/main/ConsultantDost.py) or enter it in placeholder provided on [ConsultantDost app page](https://consultant-dost-chanpie.streamlit.app/)
 3. Ask your dost a question and there you go with the guidance you need!
 
 ## App Components
-1. Consultant Dost - The main page where you can interact with your AI dost/mentor
-2. Glossary - To help in playing with the settings
-3. About me - To know about Consultant Dost, your AI mentor
+1. [Consultant Dost](https://consultant-dost-chanpie.streamlit.app/) - The main page where you can interact with your AI dost/mentor
+2. [Glossary](https://consultant-dost-chanpie.streamlit.app/Glossary) - To help in playing with the settings
+3. [About me](https://consultant-dost-chanpie.streamlit.app/About_Me) - To know about Consultant Dost, your AI mentor
    
 ## Screenshots
 <img width="960" alt="{47F089A0-34EA-4B0A-8F84-1A3ED417962C}" src="https://github.com/user-attachments/assets/6801d72a-28ff-437f-bea2-2b2927981dbf">
