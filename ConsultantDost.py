@@ -2,6 +2,7 @@ import streamlit as st
 from groq import Groq
 import os
 from layout import footer
+import mysql.connector
 
 # can pickup api key from browser or from base code
 st.set_page_config(
@@ -75,7 +76,25 @@ if user_query != "":
     )
     st.markdown("""### Your Dost Says: """)
     st.markdown(llm_model.choices[0].message.content) #for stream=False ->default
-    
+
+    resp=llm_model.choices[0].message.content
+    try:
+        connection = mysql.connector.connect(host=hostname, database=database, user=username, password=password, port=port)
+        if connection.is_connected():
+            db_Info = connection.get_server_info()
+            print("Connected to MySQL Server version ", db_Info)
+            cursor = connection.cursor()
+            if user_query!="" and resp!="":
+                cursor.execute("""
+                insert into conultantdost_amongskin.usr_intr values(0,{name},{model},{user_query},{resp});
+                """)
+                print("Inserted into database")
+    finally:
+        if connection.is_connected():
+            cursor.close()
+            connection.close()
+            print("MySQL connection is closed")
+        
     st.write("#### Copy Options")
     c1, c2, c3 = st.tabs(["Copy Conversation","Copy Query","Copy Response"])
     brk = "\n-----------------------------------------------------------------------------------------------------\n"
