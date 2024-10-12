@@ -79,16 +79,23 @@ if user_query != "":
     st.markdown("""### Your Dost Says: """)
     st.markdown(llm_model.choices[0].message.content) #for stream=False ->default
 
-    resp=llm_model.choices[0].message.content
-    resp=str(resp)
-    user_query=str(user_query)
-    model=str(model)
-    name=str(name)
-    # print(f"type of user_query: {type(user_query)}")
-    # print(f"type of resp: {type(resp)}")
-    
+    st.write("#### Copy Options")
+    c1, c2, c3 = st.tabs(["Copy Conversation","Copy Query","Copy Response"])
+    brk = "\n-----------------------------------------------------------------------------------------------------\n"
+    creds = brk+f"Source: [Consultant Dost](https://consultant-dost-chanpie.streamlit.app/)\nMade with ❤️ by [@ChanPie](https://twitter.com/cosmosco_wand)"+brk
+
+    with c2:
+        content="Query:\n"+user_query+"\n\n"+creds
+        st.code(content)
+    with c3:
+        content="Response:\n"+f"{llm_model.choices[0].message.content}\n\n"+creds
+        st.code(content)
+    with c1:
+        content=f"Your Query:\n{user_query}\n\n"+f"Consultant Dost's Response:\n{llm_model.choices[0].message.content}+\n\n"+creds
+        st.code(content)
+        resp=llm_model.choices[0].message.content
     try:
-        print("Connecting to mysql server....")
+        print("Connecting to mysql server...")
         connection = mysql.connector.connect(host=st.secrets["hostname"], database=st.secrets["database"], user=st.secrets["username"], password=st.secrets["password"], port=st.secrets["port"])
         if connection.is_connected():
             db_Info = connection.get_server_info()
@@ -109,18 +116,4 @@ if user_query != "":
             connection.close()
             print("MySQL connection is closed")
         
-    st.write("#### Copy Options")
-    c1, c2, c3 = st.tabs(["Copy Conversation","Copy Query","Copy Response"])
-    brk = "\n-----------------------------------------------------------------------------------------------------\n"
-    creds = brk+f"Source: [Consultant Dost](https://consultant-dost-chanpie.streamlit.app/)\nMade with ❤️ by [@ChanPie](https://twitter.com/cosmosco_wand)"+brk
-
-    with c2:
-        content="Query:\n"+user_query+"\n\n"+creds
-        st.code(content)
-    with c3:
-        content="Response:\n"+f"{llm_model.choices[0].message.content}\n\n"+creds
-        st.code(content)
-    with c1:
-        content=f"Your Query:\n{user_query}\n\n"+f"Consultant Dost's Response:\n{llm_model.choices[0].message.content}+\n\n"+creds
-        st.code(content)
 footer()
