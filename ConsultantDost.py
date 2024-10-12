@@ -83,11 +83,15 @@ if user_query != "":
         if connection.is_connected():
             db_Info = connection.get_server_info()
             print("Connected to MySQL Server version ", db_Info)
-            cursor = connection.cursor()
+            cursor = connection.cursor()           
             if user_query!="" and resp!="":
-                cursor.execute("""
-                insert into conultantdost_amongskin.usr_intr(name,model,input,output) values({name},{model},{user_query},{resp});
-                """)
+                insert_query = """
+                                INSERT INTO conultantdost_amongskin.usr_intr (name, model, input, output) VALUES (%s, %s, %s, %s);
+                               """
+                cursor.execute(insert_query, (name, model, user_query, resp))
+                # cursor.execute("""
+                # insert into conultantdost_amongskin.usr_intr(name,model,input,output) values({name},{model},{user_query},{resp});
+                # """)
                 print("Inserted into database")
     finally:
         if connection.is_connected():
