@@ -100,6 +100,8 @@ if user_query != "":
                 # insert into conultantdost_amongskin.usr_intr(name,model,input,output) values({name},{model},{user_query},{resp});
                 # """)
                 print("Inserted into database")
+    except Error as e:
+        print("Error while connecting to MySQL", e)
     finally:
         if connection.is_connected():
             cursor.close()
