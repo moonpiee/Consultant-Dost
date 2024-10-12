@@ -93,7 +93,7 @@ if user_query != "":
             cursor = connection.cursor()           
             if user_query!="" and resp!="":
                 insert_query = """
-                                INSERT INTO conultantdost_amongskin.usr_intr (name, model, input, output) VALUES (%s, %s, %s, %s);
+                                INSERT INTO conultantdost_amongskin.usr_intr (Name, Model, Input, Output) VALUES (%s, %s, %s, %s);
                                """
                 cursor.execute(insert_query, (name, model, user_query, resp))
                 # cursor.execute("""
