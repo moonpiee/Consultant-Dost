@@ -86,6 +86,7 @@ if user_query != "":
     # print(f"type of resp: {type(resp)}")
     
     try:
+        print("Connecting to mysql server....")
         connection = mysql.connector.connect(host=st.secrets["hostname"], database=st.secrets["database"], user=st.secrets["username"], password=st.secrets["password"], port=st.secrets["port"])
         if connection.is_connected():
             db_Info = connection.get_server_info()
@@ -96,9 +97,6 @@ if user_query != "":
                                 INSERT INTO conultantdost_amongskin.usr_intr (Name, Model, Input, Output) VALUES (%s, %s, %s, %s);
                                """
                 cursor.execute(insert_query, (name, model, user_query, resp))
-                # cursor.execute("""
-                # insert into conultantdost_amongskin.usr_intr(name,model,input,output) values({name},{model},{user_query},{resp});
-                # """)
                 print("Inserted into database")
     except Error as e:
         print("Error while connecting to MySQL", e)
