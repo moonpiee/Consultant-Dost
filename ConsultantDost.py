@@ -99,6 +99,7 @@ if user_query != "":
                                 INSERT INTO conultantdost_amongskin.usr_intr (Name, Model, Input, Output) VALUES (%s, %s, %s, %s);
                                """
                 cursor.execute(insert_query, (name, model, user_query, resp))
+                connection.commit()
                 print("Inserted into database")
     except Error as e:
         print("Error while connecting to MySQL", e)
