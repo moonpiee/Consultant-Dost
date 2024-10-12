@@ -79,7 +79,7 @@ if user_query != "":
 
     resp=llm_model.choices[0].message.content
     try:
-        connection = mysql.connector.connect(host=hostname, database=database, user=username, password=password, port=port)
+        connection = mysql.connector.connect(host=secrets["hostname"], database=secrets["database"], user=secrets["username"], password=secrets["password"], port=secrets["port"])
         if connection.is_connected():
             db_Info = connection.get_server_info()
             print("Connected to MySQL Server version ", db_Info)
