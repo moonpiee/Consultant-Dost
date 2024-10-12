@@ -78,8 +78,12 @@ if user_query != "":
     st.markdown(llm_model.choices[0].message.content) #for stream=False ->default
 
     resp=llm_model.choices[0].message.content
-    print(f"type of user_query: {type(user_query)}")
-    print(f"type of resp: {type(resp)}")
+    resp=str(resp)
+    user_query=str(user_query)
+    model=str(model)
+    name=str(name)
+    # print(f"type of user_query: {type(user_query)}")
+    # print(f"type of resp: {type(resp)}")
     
     try:
         connection = mysql.connector.connect(host=st.secrets["hostname"], database=st.secrets["database"], user=st.secrets["username"], password=st.secrets["password"], port=st.secrets["port"])
