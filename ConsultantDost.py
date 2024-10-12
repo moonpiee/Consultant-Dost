@@ -3,6 +3,8 @@ from groq import Groq
 import os
 from layout import footer
 import mysql.connector
+from mysql.connector import Error
+
 
 # can pickup api key from browser or from base code
 st.set_page_config(
