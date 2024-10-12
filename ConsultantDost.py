@@ -86,7 +86,7 @@ if user_query != "":
             cursor = connection.cursor()
             if user_query!="" and resp!="":
                 cursor.execute("""
-                insert into conultantdost_amongskin.usr_intr values(0,name,model,user_query,resp);
+                insert into conultantdost_amongskin.usr_intr(name,model,input,output) values({name},{model},{user_query},{resp});
                 """)
                 print("Inserted into database")
     finally:
