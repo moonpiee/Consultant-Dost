@@ -92,7 +92,7 @@ if user_query != "":
         st.code(content)
     with c1:
         content=f"Your Query:\n{user_query}\n\n"+f"Consultant Dost's Response:\n{llm_model.choices[0].message.content}\n\n"+creds
-        st.code(content,language="markdown")
+        st.code(content)
         resp=llm_model.choices[0].message.content
     try:
         print("Connecting to mysql server...")
