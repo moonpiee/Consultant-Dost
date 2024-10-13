@@ -9,7 +9,11 @@ Meet Your Friend Who Can Help You In Your Consultancy Career With:
 ## How To Use
 1. Download/Clone the repository & install the requirements from [Requirements.txt](https://github.com/moonpiee/Consultant-Dost/blob/main/requirements.txt)
 2. Get Your Groq API key [here](https://console.groq.com/keys). You can use it directly in the [code](https://github.com/moonpiee/Consultant-Dost/blob/main/ConsultantDost.py) or enter it in placeholder provided on [ConsultantDost app page](https://consultant-dost-chanpie.streamlit.app/)
-3. Ask your mentor a question and there you go with the best _dostly_ guidance you need!
+3. If running locally, run the below command to get the app running on your local server
+   ```python
+   streamlit run ConsultantDost.py
+   ```
+4. Ask your mentor a question and there you go with the best _dostly_ guidance you need!
 
 ## App Components
 1. [Consultant Dost](https://consultant-dost-chanpie.streamlit.app/) - The main page where you can interact with your AI dost/mentor
